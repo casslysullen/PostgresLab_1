@@ -1,0 +1,25 @@
+SELECT * FROM Customers;
+SELECT country FROM Customers;
+SELECT * FROM Customers WHERE ID= "BL";
+SELECT * FROM orders WHERE * <= 100 ORDER BY ID;
+
+SELECT * FROM Customers WHERE postalCodes= 1010;
+SELECT * FROM Customers WHERE postalCodes= 3012;
+SELECT * FROM Customers WHERE postalCodes= 12209;
+SELECT * FROM Customers WHERE postalCodes= 05023;
+
+SELECT * FROM orders WHERE ShipRegion !=== NULL;
+SELECT * FROM Customers ORDER BY country, city;
+INSERT INTO Customers (customerName, city, postalCodes, country) VALUES ('Cass', 'Detroit', '48221', 'USA');
+UPDATE Customers SET ShipRegion= 'EuroZone' WHERE ShipCountry === France;
+DELETE FROM orders WHERE order_details = 1;
+
+SELECT AVG(order_details) FROM orders;
+SELECT MAX(order_details) FROM orders;
+SELECT MIN(order_details) FROM orders;
+
+SELECT orderID AVG(order_details);
+SELECT orderID MAX(order_details);
+SELECT orderID MIN(order_details);
+
+SELECT customerID, FROM orders WHERE
