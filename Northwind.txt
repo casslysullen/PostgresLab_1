@@ -1,25 +1,65 @@
+1. Select all the records from the "Customers" table.
 SELECT * FROM Customers;
-SELECT country FROM Customers;
-SELECT * FROM Customers WHERE ID= "BL";
-SELECT * FROM orders WHERE * <= 100 ORDER BY ID;
 
-SELECT * FROM Customers WHERE postalCodes= 1010;
-SELECT * FROM Customers WHERE postalCodes= 3012;
-SELECT * FROM Customers WHERE postalCodes= 12209;
-SELECT * FROM Customers WHERE postalCodes= 05023;
+2. Get distinct countries from the Customers table.
+SELECT DISTINCT FROM Customers;
 
-SELECT * FROM orders WHERE ShipRegion !=== NULL;
-SELECT * FROM Customers ORDER BY country, city;
-INSERT INTO Customers (customerName, city, postalCodes, country) VALUES ('Cass', 'Detroit', '48221', 'USA');
-UPDATE Customers SET ShipRegion= 'EuroZone' WHERE ShipCountry === France;
-DELETE FROM orders WHERE order_details = 1;
+3. Get all the records from the table Customers where the Customer’s ID starts with “BL”.
+SELECT * FROM Customers WHERE ID customer_id LIKE 'BL%';
 
-SELECT AVG(order_details) FROM orders;
-SELECT MAX(order_details) FROM orders;
-SELECT MIN(order_details) FROM orders;
+4. Get the first 100 records of the orders table.
+SELECT * FROM orders ORDER BY order_date ASC LIMIT 100;
 
-SELECT orderID AVG(order_details);
-SELECT orderID MAX(order_details);
-SELECT orderID MIN(order_details);
+5. Get all customers that live in the postal codes 1010, 3012, 12209, and 05023.
+SELECT * FROM Customers WHERE postalCodes IN('1010', '3012', '12209', '05023');
 
-SELECT customerID, FROM orders WHERE
+6. Get all orders where the ShipRegion is not equal to NULL.
+SELECT * FROM orders WHERE NOT ship_region = 'null';
+
+7.Get all customers ordered by the country, then by the city.
+ SELECT * FROM Customers ORDER BY country, city;
+
+8.Add a new customer to the customers table. You can use whatever values.
+ INSERT INTO Customers (customer_id, city, postal_code, country) VALUES ('8047', 'Detroit', '48221', 'USA');
+
+9. Update all ShipRegion to the value ‘EuroZone’ in the Orders table, where the
+ShipCountry is equal to France.
+UPDATE orders SET ship_region= 'EuroZone' WHERE ship_country = France;
+
+10. Delete all orders from `order_details` that have a quantity of 1.
+DELETE FROM order_details WHERE quantity = '1';
+
+11. Calculate the average, max, and min of the quantity at the `order details` table.
+SELECT AVG(quantity), MAX(quantity), MIN(quantity) FROM order_details;
+
+12. Calculate the average, max, and min of the quantity at the `order details` table,
+grouped by the orderid.
+
+SELECT orderID AVG(order_details) AS  min_quantity, MAX(order_details) AS max_quantity, MIN(order_details) AS min_quantity;
+
+13. Find the CustomerID that placed order 10290 (orders table)
+SELECT customer_id FROM orders WHERE order_id='10290';
+
+14. Do an inner join, left join, right join on orders and customers tables. (These are three
+separate queries, one for each type of join.)
+
+SELECT * FROM orders INNER JOIN Customers ON orders.customer_id = customers.customer_id;
+SELECT * FROM orders LEFT JOIN Customers ON orders.customer_id= customers.customer_id;
+SELECT * FROM orders RIGHT JOIN Customers ON orders.customer_id= customers.customer_id;
+
+15. Use a join to get the ship city and ship country of all the orders which are associated
+with an employee who is in London.
+
+SELECT orders.ship_city, employees.city FROM orders INNER JOIN employees ON orders.ship_city = employees.city WHERE employees.city = 'London';
+
+16. Use a join to get the ship name of all orders that include a discontinued product. (See
+orders, order_details, and products. 1 means discontinued.)
+
+SELECT ship_name FROM orders INNER JOIN order_details ON order_details.
+order_id=orders.order_id INNER JOIN products ON products.product_id=order_details.product_id WHERE discontinued='1';
+
+17. Get first names of all employees who report to no one.
+    SELECT first_name FROM employees WHERE reports_to IS NULL;
+
+18. Get first names of all employees who report to Andrew.
+    SELECT first_name FROM employees WHERE reports_to = 2;
